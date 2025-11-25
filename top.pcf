@@ -1,0 +1,18 @@
+#input
+
+#pll
+set_io clock_in 20      #input
+set_io locked 23        #---
+
+
+#vga.sv
+set_io VSYNC 26         #output
+set_io HSYNC 27         #output
+
+#pattern_gen.sv
+set_io rgb[5] 36
+set_io rgb[4] 43
+set_io rgb[3] 34
+set_io rgb[2] 37
+set_io rgb[1] 31
+set_io rgb[0] 35
