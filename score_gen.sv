@@ -19,26 +19,64 @@ logic[5:0] black = 6'd0;
 logic[5:0] digit1;
 logic[6:0] digit1_offset = 7'd20;
 
-logic[5:0] digit2 = white;
+logic[5:0] digit2;
 logic[6:0] digit2_offset = 7'd46;
 
-logic[5:0] digit3 = white;
+logic[5:0] digit3;
 logic[6:0] digit3_offset = 7'd72;
 
-logic[5:0] digit4 = white;
+logic[5:0] digit4;
 logic[6:0] digit4_offset = 7'd98;
 
-logic[5:0] digit5 = white;
+logic[5:0] digit5;
 logic[6:0] digit5_offset = 7'd124;
 
+logic[16:0] score = 17'd67890;
 
-digit1_gen u_digit1_gen(
+
+digit_gen digit1_gen(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
         .offset(digit1_offset),         //in
-        .score(17'd10000),                  //in
+        .score(score),                  //in
         .digit_rgb(digit1)              //out
+);
+
+digit_gen digit2_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(digit2_offset),         //in
+        .score(score),                  //in
+        .digit_rgb(digit2)              //out
+);
+
+digit_gen digit3_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(digit3_offset),         //in
+        .score(score),                  //in
+        .digit_rgb(digit3)              //out
+);
+
+digit_gen digit4_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(digit4_offset),         //in
+        .score(score),                  //in
+        .digit_rgb(digit4)              //out
+);
+
+digit_gen digit5_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(digit5_offset),         //in
+        .score(score),                  //in
+        .digit_rgb(digit5)              //out
 );
 
 always_comb begin
