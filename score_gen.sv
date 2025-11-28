@@ -5,29 +5,7 @@ module score_gen(
         output logic[5:0] rgb
 );
 
-//row : section_row == col : scaled_down_col == 5:1 ALWAYS  
-
-/* ROWS UP NUMBER MAPPED TO SECTION (using the number 2 as an exmaple)
-a        00000
-a        00000
-b           00
-c        00000
-c        00000
-d        00      
-e        00000
-e        00000
-*/
-
-//KNOWN VALUES
-// logic[4:0] section_num_rows = 5;
-
-// logic[9:0] sec_a_begin = 70;
-// logic[9:0] sec_b_begin = sec_a_begin + 2*section_num_rows;
-// logic[9:0] sec_c_begin = sec_b_begin + section_num_rows;
-// logic[9:0] sec_d_begin = sec_c_begin + 2*section_num_rows;
-// logic[9:0] sec_e_begin = sec_d_begin + section_num_rows;
-// logic[9:0] sec_e_end = sec_e_begin + 2*section_num_rows;
-
+//COLORS
 logic[5:0] red = 6'b110000;
 logic[5:0] green = 6'b001100;
 logic[5:0] blue = 6'b000011;
@@ -37,19 +15,30 @@ logic[5:0] white = 6'b111111;
 logic[5:0] black = 6'd0;
 
 
-// logic[4:0] which_dig = 5'b00000;
-
+//DIGIT LOCATIONS
 logic[5:0] digit1;
-logic[5:0] digit2 = white;
-logic[5:0] digit3 = white;
-logic[5:0] digit4 = white;
-logic[5:0] digit5 = white;
+logic[6:0] digit1_offset = 7'd20;
 
-digit_gen u_digit_gen(
+logic[5:0] digit2 = white;
+logic[6:0] digit2_offset = 7'd46;
+
+logic[5:0] digit3 = white;
+logic[6:0] digit3_offset = 7'd72;
+
+logic[5:0] digit4 = white;
+logic[6:0] digit4_offset = 7'd98;
+
+logic[5:0] digit5 = white;
+logic[6:0] digit5_offset = 7'd124;
+
+
+digit1_gen u_digit1_gen(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
-        .digit(digit1)                  //out
+        .offset(digit1_offset),         //in
+        .score(17'd10000),                  //in
+        .digit_rgb(digit1)              //out
 );
 
 always_comb begin
@@ -94,28 +83,6 @@ always_comb begin
         end else begin
                 rgb = black;
         end
-
-
-        
-
-        // /*MAKES digit1 0*/
-
-        // if ((70 < row) & (row <= 80) |
-        //         (100 < row) & (row <= 110)) begin
-        //         digit1 = white;
-        // end else
-        // if ((80 < row) & (row <= 100)) begin
-        //         if(((20 < col) & (col <= 30)) | 
-        //                 ((35 < col) & (col <= 45))) begin
-        //                 digit1 = white;
-        //         end else begin
-        //                 digit1 = black;
-        //         end
-        // end else begin
-        //         digit1 = black;    
-        // end  
-
-        // /* MAKES digit1 0 */
 end
 
 

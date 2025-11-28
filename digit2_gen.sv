@@ -1,4 +1,4 @@
-module digit_gen(
+module digit2_gen(
         input logic[9:0] col,
         input logic[9:0] row,
         input logic valid,
@@ -18,12 +18,12 @@ always_comb begin
                 /*MAKES digit 0*/
 
                 if ((70 < row) & (row <= 80) |
-                        (100 < row) & (row <= 110)) begin
+                   (100 < row) & (row <= 110)) begin
                         digit = green;
                 end else
                 if ((80 < row) & (row <= 100)) begin
-                        if(((20 < col) & (col <= 30)) | 
-                                ((35 < col) & (col <= 45))) begin
+                        if(((46 < col) & (col <= 56)) | 
+                           ((61 < col) & (col <= 71))) begin
                                 digit = green;
                         end else begin
                                 digit = black;
