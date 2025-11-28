@@ -45,6 +45,12 @@ logic[5:0] digit3 = white;
 logic[5:0] digit4 = white;
 logic[5:0] digit5 = white;
 
+digit_gen u_digit_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .digit(digit1)                  //out
+);
 
 always_comb begin
         if (valid == 1) begin
@@ -92,24 +98,24 @@ always_comb begin
 
         
 
-        /*MAKES digit1 0*/
+        // /*MAKES digit1 0*/
 
-        if ((70 < row) & (row <= 80) |
-                (100 < row) & (row <= 110)) begin
-                digit1 = white;
-        end else
-        if ((80 < row) & (row <= 100)) begin
-                if(((20 < col) & (col <= 30)) | 
-                        ((35 < col) & (col <= 45))) begin
-                        digit1 = white;
-                end else begin
-                        digit1 = black;
-                end
-        end else begin
-                digit1 = black;    
-        end  
+        // if ((70 < row) & (row <= 80) |
+        //         (100 < row) & (row <= 110)) begin
+        //         digit1 = white;
+        // end else
+        // if ((80 < row) & (row <= 100)) begin
+        //         if(((20 < col) & (col <= 30)) | 
+        //                 ((35 < col) & (col <= 45))) begin
+        //                 digit1 = white;
+        //         end else begin
+        //                 digit1 = black;
+        //         end
+        // end else begin
+        //         digit1 = black;    
+        // end  
 
-        /* MAKES digit1 0 */
+        // /* MAKES digit1 0 */
 end
 
 
