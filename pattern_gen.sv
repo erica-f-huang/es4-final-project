@@ -31,13 +31,6 @@ logic[9:0] orange_end = orange_begin + stripe_width;
 logic[9:0] white_begin = orange_end + stripe_gap;
 logic[9:0] white_end = white_begin + (3*stripe_width);
 
-// number_gen digit_1(
-//         .col(col),
-//         .row(row),
-//         .rgb(rgb)
-// );
-
-
 always_comb begin
         if (valid == 1) begin
                 // make left col white to get border
@@ -50,19 +43,43 @@ always_comb begin
                                 rgb = white;
 
                         //get individual number blocks (5 total)
-                        //row section A
-
                         end else if ((70 < row) & (row < 110)) begin
-                                // if ((20 < col) & (col <= 45)) begin
-                                        // rgb = white;
-                                // end else 
+                                //10000
+                                if ((20 < col) & (col <= 45)) begin
+                                        /*MAKES A 0*/
+
+                                        if ((70 < row) & (row <= 80) |
+                                            (100 < row) & (row <= 110)) begin
+                                                rgb = white;
+                                        end else
+                                        if ((80 < row) & (row <= 100)) begin
+                                                if(((20 < col) & (col <= 30)) | 
+                                                   ((35 < col) & (col <= 45))) begin
+                                                        rgb = white;
+                                                end else begin
+                                                        rgb = black;
+                                                end
+                                        end else begin
+                                                rgb = black;    
+                                        end  
+
+                                        /* MAKES A 0 */ 
+
+                                end else 
+                                //01000
                                 if ((46 < col) & (col <= 71))begin
                                         rgb = white;
-                                end else if ((72 < col) & (col <= 97))begin
+                                end else 
+                                //00100
+                                if ((72 < col) & (col <= 97))begin
                                         rgb = white;
-                                end else if ((98 < col) & (col <= 123))begin
+                                end else 
+                                //00010
+                                if ((98 < col) & (col <= 123))begin
                                         rgb = white;
-                                end else if ((124 < col) & (col <= 149))begin
+                                end else 
+                                //00001
+                                if ((124 < col) & (col <= 149))begin
                                         rgb = white;
                                 end else begin
                                         rgb = black;

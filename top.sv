@@ -1,8 +1,8 @@
 module top(
-        input  clock_in,
-        output HSYNC,
-        output VSYNC,
-        output logic [5:0] rgb,
+        input  clock_in,                
+        output HSYNC,                   //go to vga adapter
+        output VSYNC,                   //go to vga adapter
+        output logic [5:0] rgb,         //go to vga adapter
 	output locked                   // leave floating
 );
 
@@ -13,25 +13,25 @@ logic [9:0] curr_row;
 logic valid;
 
         mypll u_mypll(
-                .clock_in(clock_in),
-                .clock_out(intermediate_clk),
-                .locked(locked)
+                .clock_in(clock_in),            //in
+                .clock_out(intermediate_clk),   //out
+                .locked(locked)                 //out
         );
 
         vga u_vga(
-                .clk(intermediate_clk),
-                .HSYNC(HSYNC),
-                .VSYNC(VSYNC),
-                .valid(valid),
-                .curr_col(curr_col),
-                .curr_row(curr_row)
+                .clk(intermediate_clk),         //in
+                .HSYNC(HSYNC),                  //out
+                .VSYNC(VSYNC),                  //out
+                .valid(valid),                  //out
+                .curr_col(curr_col),            //out
+                .curr_row(curr_row)             //out
         );
 
-        pattern_gen u_pattern_gen(
-                .col(curr_col),
-                .row(curr_row),
-                .valid(valid),
-                .rgb(rgb)
+        score_gen u_pattern_gen(
+                .col(curr_col),                 //in
+                .row(curr_row),                 //in
+                .valid(valid),                  //in
+                .rgb(rgb)                       //out
         );
 
 
