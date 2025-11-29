@@ -27,7 +27,7 @@ logic valid;
                 .curr_row(curr_row)             //out
         );
 
-        score_gen u_pattern_gen(
+        screen_gen u_screen_gen(
                 .col(curr_col),                 //in
                 .row(curr_row),                 //in
                 .valid(valid),                  //in

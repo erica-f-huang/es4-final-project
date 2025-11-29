@@ -1,0 +1,233 @@
+module screen_gen(
+        input logic[9:0] col,
+        input logic[9:0] row,
+        input logic valid,
+        output logic[5:0] rgb
+);
+
+//COLORS
+logic[5:0] red = 6'b110000;
+logic[5:0] green = 6'b001100;
+logic[5:0] blue = 6'b000011;
+logic[5:0] yellow = 6'b111100;
+logic[5:0] orange = 6'b110100;
+logic[5:0] white = 6'b111111;
+logic[5:0] black = 6'd0;
+
+
+//DIGIT INFO
+logic[5:0] digit1;
+logic[6:0] digit1_offset = 7'd20;
+
+logic[5:0] digit2;
+logic[6:0] digit2_offset = 7'd46;
+
+logic[5:0] digit3;
+logic[6:0] digit3_offset = 7'd72;
+
+logic[5:0] digit4;
+logic[6:0] digit4_offset = 7'd98;
+
+logic[5:0] digit5;
+logic[6:0] digit5_offset = 7'd124;
+
+
+//SCORE
+logic[16:0] score_val = 17'd88753;
+
+//DIGIT GENERATORS
+digit_gen digit1_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(digit1_offset),         //in
+        .score(score_val),              //in
+        .digit_rgb(digit1)              //out
+);
+
+digit_gen digit2_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(digit2_offset),         //in
+        .score(score_val),              //in
+        .digit_rgb(digit2)              //out
+);
+
+digit_gen digit3_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(digit3_offset),         //in
+        .score(score_val),              //in
+        .digit_rgb(digit3)              //out
+);
+
+digit_gen digit4_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(digit4_offset),         //in
+        .score(score_val),              //in
+        .digit_rgb(digit4)              //out
+);
+
+digit_gen digit5_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(digit5_offset),         //in
+        .score(score_val),              //in
+        .digit_rgb(digit5)              //out
+);
+
+
+//"SCORE" GENERATOR
+logic[5:0] score_title;
+score_title_gen score_title_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .score_rgb(score_title)         //out
+);
+
+
+
+
+
+//STRIPE INFO
+logic[6:0] stripe_width = 35;
+logic[6:0] stripe_gap = 20;
+
+logic[9:0] green_begin = 220;
+logic[9:0] yellow_begin = green_begin + stripe_width + stripe_gap;
+logic[9:0] blue_begin = yellow_begin + stripe_width + stripe_gap;
+logic[9:0] orange_begin = blue_begin + stripe_width + stripe_gap;
+logic[9:0] white_begin = orange_begin + stripe_width + stripe_gap;
+
+logic[9:0] white_end = white_begin + (3*stripe_width);
+
+logic[5:0] green_block;
+logic[5:0] yellow_block;
+logic[5:0] blue_block;
+logic[5:0] orange_block;
+logic[5:0] white_block;
+
+
+// //BLOCK GENERATORS
+// block_gen green_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(green_begin),           //in
+//         .stripe_width(stripe_width),    //in
+//         .color(rgb),                    //in
+//         .block_rgb(green_block)         //out
+// );
+
+// block_gen yellow_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(yellow_begin),           //in
+//         .stripe_width(stripe_width),    //in
+//         .color(rgb),                    //in
+//         .block_rgb(yellow_block)         //out
+// );
+
+// block_gen blue_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(blue_begin),           //in
+//         .stripe_width(stripe_width),    //in
+//         .color(rgb),                    //in
+//         .block_rgb(blue_block)         //out
+// );
+
+// block_gen Orange_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(orange_begin),           //in
+//         .stripe_width(stripe_width),    //in
+//         .color(rgb),                    //in
+//         .block_rgb(orange_block)         //out
+// );
+
+// block_gen white_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(white_begin),           //in
+//         .stripe_width(3*stripe_width),    //in
+//         .color(rgb),                    //in
+//         .block_rgb(white_block)         //out
+// );
+
+always_comb begin
+        if (valid == 1) begin
+                //make borders white
+                if ((col == 1) | (col == 639)) begin
+                        rgb = white;
+                //get squares for score and "score"
+                end else if ((20 < col) & (col < 150)) begin
+                        //rectangle for "score"
+                        if ((20 < row) & (row < 60)) begin
+                                rgb = score_title;
+
+                        //get individual number blocks (5 total)
+                        end else if ((70 < row) & (row < 110)) begin
+                                //10000
+                                if ((20 < col) & (col <= 45)) begin
+                                        rgb = digit1;
+                                end else 
+                                //01000
+                                if ((46 < col) & (col <= 71))begin
+                                        rgb = digit2;
+                                end else 
+                                //00100
+                                if ((72 < col) & (col <= 97))begin
+                                        rgb = digit3;
+                                end else 
+                                //00010
+                                if ((98 < col) & (col <= 123))begin
+                                        rgb = digit4;
+                                end else 
+                                //00001
+                                if ((124 < col) & (col <= 149))begin
+                                        rgb = digit5;
+                                end else begin
+                                        rgb = black;
+                                end
+                        end else begin
+                                rgb = black;
+                        end
+                
+                end else if ((green_begin < col) & (col < (green_begin + stripe_width))) begin
+                        rgb = green;
+                end else if ((yellow_begin < col) & (col < (yellow_begin + stripe_width))) begin
+                        rgb = yellow;
+                end else if ((blue_begin < col) & (col < (blue_begin + stripe_width))) begin
+                        rgb = blue;
+                end else if ((orange_begin < col) & (col < (orange_begin + stripe_width))) begin
+                        rgb = orange;
+                end else if ((white_begin < col) & (col < (white_begin + 3*stripe_width))) begin
+                        rgb = white;
+                //make rest black
+                end else begin
+                        rgb = black;
+                end
+
+        end else begin
+                rgb = black;
+        end
+end
+
+
+
+
+
+
+
+endmodule
