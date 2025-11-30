@@ -94,19 +94,18 @@ score_title_gen score_title_gen(
 
 
 
-
-//STRIPE INFO
+//BLOCK LANE INFO
 logic[6:0] stripe_width = 35;
 logic[6:0] stripe_gap = 20;
 
+//offsets
 logic[9:0] green_begin = 220;
 logic[9:0] yellow_begin = green_begin + stripe_width + stripe_gap;
 logic[9:0] blue_begin = yellow_begin + stripe_width + stripe_gap;
 logic[9:0] orange_begin = blue_begin + stripe_width + stripe_gap;
 logic[9:0] white_begin = orange_begin + stripe_width + stripe_gap;
 
-logic[9:0] white_end = white_begin + (3*stripe_width);
-
+//feeds into rgb
 logic[5:0] green_block;
 logic[5:0] yellow_block;
 logic[5:0] blue_block;
@@ -167,16 +166,25 @@ block_gen white_block_gen(
 
 always_comb begin
         if (valid == 1) begin
-                //make borders white
+                //L&R EDGE BORDER
                 if ((col == 1) | (col == 639)) begin
                         rgb = white;
-                //get squares for score and "score"
+
+                //HIT ZONE
+                end else if ((425 < row & row <= 430) |
+                        (465 < row & row <= 470)) begin
+                                if(210 < col & col <= 555) begin
+                                        rgb = 6'b101010;
+                                end else begin
+                                        rgb = black;
+                                end
+                //"SCORE" & SCORE VAL
                 end else if ((20 < col) & (col < 150)) begin
-                        //rectangle for "score"
+                        //"SCORE"
                         if ((20 < row) & (row < 60)) begin
                                 rgb = score_title;
 
-                        //get individual number blocks (5 total)
+                        //SCORE VALUE
                         end else if ((70 < row) & (row < 110)) begin
                                 //10000
                                 if ((20 < col) & (col <= 45)) begin
@@ -203,7 +211,8 @@ always_comb begin
                         end else begin
                                 rgb = black;
                         end
-                //STRIPES
+
+                //BLOCK LANES
                 end else if ((green_begin < col) & (col < (green_begin + stripe_width))) begin
                         rgb = green_block;
                 end else if ((yellow_begin < col) & (col < (yellow_begin + stripe_width))) begin
@@ -214,7 +223,8 @@ always_comb begin
                         rgb = orange_block;
                 end else if ((white_begin < col) & (col < (white_begin + 3*stripe_width))) begin
                         rgb = white_block;
-                //make rest black
+
+                //REST OF SCREEN
                 end else begin
                         rgb = black;
                 end
