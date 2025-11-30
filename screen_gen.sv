@@ -114,56 +114,56 @@ logic[5:0] orange_block;
 logic[5:0] white_block;
 
 
-// //BLOCK GENERATORS
-// block_gen green_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(green_begin),           //in
-//         .stripe_width(stripe_width),    //in
-//         .color(rgb),                    //in
-//         .block_rgb(green_block)         //out
-// );
+//BLOCK GENERATORS
+block_gen green_block_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(green_begin),           //in
+        .stripe_width(stripe_width),    //in
+        .color(green),                  //in
+        .block_rgb(green_block)         //out
+);
 
-// block_gen yellow_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(yellow_begin),           //in
-//         .stripe_width(stripe_width),    //in
-//         .color(rgb),                    //in
-//         .block_rgb(yellow_block)         //out
-// );
+block_gen yellow_block_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(yellow_begin),          //in
+        .stripe_width(stripe_width),    //in
+        .color(yellow),                 //in
+        .block_rgb(yellow_block)        //out
+);
 
-// block_gen blue_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(blue_begin),           //in
-//         .stripe_width(stripe_width),    //in
-//         .color(rgb),                    //in
-//         .block_rgb(blue_block)         //out
-// );
+block_gen blue_block_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(blue_begin),            //in
+        .stripe_width(stripe_width),    //in
+        .color(blue),                   //in
+        .block_rgb(blue_block)          //out
+);
 
-// block_gen Orange_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(orange_begin),           //in
-//         .stripe_width(stripe_width),    //in
-//         .color(rgb),                    //in
-//         .block_rgb(orange_block)         //out
-// );
+block_gen Orange_block_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(orange_begin),          //in
+        .stripe_width(stripe_width),    //in
+        .color(orange),                 //in
+        .block_rgb(orange_block)        //out
+);
 
-// block_gen white_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(white_begin),           //in
-//         .stripe_width(3*stripe_width),    //in
-//         .color(rgb),                    //in
-//         .block_rgb(white_block)         //out
-// );
+block_gen white_block_gen(
+        .col(col),                      //in
+        .row(row),                      //in
+        .valid(valid),                  //in
+        .offset(white_begin),           //in
+        .stripe_width(7'd3*stripe_width),  //in
+        .color(white),                  //in
+        .block_rgb(white_block)         //out
+);
 
 always_comb begin
         if (valid == 1) begin
@@ -203,17 +203,17 @@ always_comb begin
                         end else begin
                                 rgb = black;
                         end
-                
+                //STRIPES
                 end else if ((green_begin < col) & (col < (green_begin + stripe_width))) begin
-                        rgb = green;
+                        rgb = green_block;
                 end else if ((yellow_begin < col) & (col < (yellow_begin + stripe_width))) begin
-                        rgb = yellow;
+                        rgb = yellow_block;
                 end else if ((blue_begin < col) & (col < (blue_begin + stripe_width))) begin
-                        rgb = blue;
+                        rgb = blue_block;
                 end else if ((orange_begin < col) & (col < (orange_begin + stripe_width))) begin
-                        rgb = orange;
+                        rgb = orange_block;
                 end else if ((white_begin < col) & (col < (white_begin + 3*stripe_width))) begin
-                        rgb = white;
+                        rgb = white_block;
                 //make rest black
                 end else begin
                         rgb = black;
