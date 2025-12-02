@@ -33,7 +33,7 @@ logic[6:0] digit5_offset = 7'd124;
 
 
 //SCORE
-logic[16:0] score_val = 17'd88753;
+logic[16:0] score_val = 17'd80085;
 
 //DIGIT GENERATORS
 digit_gen digit1_gen(
@@ -100,10 +100,10 @@ logic[6:0] stripe_gap = 20;
 
 //offsets
 logic[9:0] green_begin = 220;
-logic[9:0] yellow_begin = green_begin + stripe_width + stripe_gap;
-logic[9:0] blue_begin = yellow_begin + stripe_width + stripe_gap;
-logic[9:0] orange_begin = blue_begin + stripe_width + stripe_gap;
-logic[9:0] white_begin = orange_begin + stripe_width + stripe_gap;
+logic[9:0] yellow_begin = green_begin + stripe_width + stripe_gap; //275
+logic[9:0] blue_begin = yellow_begin + stripe_width + stripe_gap; //330
+logic[9:0] orange_begin = blue_begin + stripe_width + stripe_gap; //385
+logic[9:0] white_begin = orange_begin + stripe_width + stripe_gap; //440
 
 //feeds into rgb
 logic[5:0] green_block;
@@ -114,54 +114,89 @@ logic[5:0] white_block;
 
 
 //BLOCK GENERATORS
-block_gen green_block_gen(
+// block_gen green_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(green_begin),           //in
+//         .stripe_width(stripe_width),    //in
+//         .color(green),                  //in
+//         .block_rgb(green_block)         //out
+// );
+
+// block_gen yellow_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(yellow_begin),          //in
+//         .stripe_width(stripe_width),    //in
+//         .color(yellow),                 //in
+//         .block_rgb(yellow_block)        //out
+// );
+
+// block_gen blue_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(blue_begin),            //in
+//         .stripe_width(stripe_width),    //in
+//         .color(blue),                   //in
+//         .block_rgb(blue_block)          //out
+// );
+
+// block_gen Orange_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(orange_begin),          //in
+//         .stripe_width(stripe_width),    //in
+//         .color(orange),                 //in
+//         .block_rgb(orange_block)        //out
+// );
+
+// block_gen white_block_gen(
+//         .col(col),                      //in
+//         .row(row),                      //in
+//         .valid(valid),                  //in
+//         .offset(white_begin),           //in
+//         .stripe_width(7'd3*stripe_width),  //in
+//         .color(white),                  //in
+//         .block_rgb(white_block)         //out
+// );
+
+green_lane u_green_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
-        .offset(green_begin),           //in
-        .stripe_width(stripe_width),    //in
-        .color(green),                  //in
-        .block_rgb(green_block)         //out
+        .lane_rgb(green_block)
 );
 
-block_gen yellow_block_gen(
+yellow_lane u_yellow_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
-        .offset(yellow_begin),          //in
-        .stripe_width(stripe_width),    //in
-        .color(yellow),                 //in
-        .block_rgb(yellow_block)        //out
+        .lane_rgb(yellow_block)
 );
 
-block_gen blue_block_gen(
+blue_lane u_blue_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
-        .offset(blue_begin),            //in
-        .stripe_width(stripe_width),    //in
-        .color(blue),                   //in
-        .block_rgb(blue_block)          //out
+        .lane_rgb(blue_block)
 );
 
-block_gen Orange_block_gen(
+orange_lane u_orange_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
-        .offset(orange_begin),          //in
-        .stripe_width(stripe_width),    //in
-        .color(orange),                 //in
-        .block_rgb(orange_block)        //out
+        .lane_rgb(orange_block)
 );
 
-block_gen white_block_gen(
+white_lane u_white_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
-        .offset(white_begin),           //in
-        .stripe_width(7'd3*stripe_width),  //in
-        .color(white),                  //in
-        .block_rgb(white_block)         //out
+        .lane_rgb(white_block)
 );
 
 always_comb begin
