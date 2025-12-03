@@ -2,7 +2,8 @@ module screen_gen(
         input logic[9:0] col,
         input logic[9:0] row,
         input logic valid,
-        output logic[5:0] rgb
+        output logic[5:0] rgb,
+        input logic clk
 );
 
 //COLORS
@@ -33,7 +34,7 @@ logic[6:0] digit5_offset = 7'd124;
 
 
 //SCORE
-logic[16:0] score_val = 17'd80085;
+logic[16:0] score_val = 17'd80035;
 
 //DIGIT GENERATORS
 digit_gen digit1_gen(
@@ -114,60 +115,12 @@ logic[5:0] white_block;
 
 
 //BLOCK GENERATORS
-// block_gen green_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(green_begin),           //in
-//         .stripe_width(stripe_width),    //in
-//         .color(green),                  //in
-//         .block_rgb(green_block)         //out
-// );
-
-// block_gen yellow_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(yellow_begin),          //in
-//         .stripe_width(stripe_width),    //in
-//         .color(yellow),                 //in
-//         .block_rgb(yellow_block)        //out
-// );
-
-// block_gen blue_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(blue_begin),            //in
-//         .stripe_width(stripe_width),    //in
-//         .color(blue),                   //in
-//         .block_rgb(blue_block)          //out
-// );
-
-// block_gen Orange_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(orange_begin),          //in
-//         .stripe_width(stripe_width),    //in
-//         .color(orange),                 //in
-//         .block_rgb(orange_block)        //out
-// );
-
-// block_gen white_block_gen(
-//         .col(col),                      //in
-//         .row(row),                      //in
-//         .valid(valid),                  //in
-//         .offset(white_begin),           //in
-//         .stripe_width(7'd3*stripe_width),  //in
-//         .color(white),                  //in
-//         .block_rgb(white_block)         //out
-// );
 
 green_lane u_green_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
+        .clk(clk),
         .lane_rgb(green_block)
 );
 

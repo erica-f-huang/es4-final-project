@@ -27,11 +27,18 @@ logic valid;
                 .curr_row(curr_row)             //out
         );
 
+logic counter_clk;
+        counter u_counter(
+                .in_clk(intermediate_clk),
+                .out_clk(counter_clk)
+        );
+
         screen_gen u_screen_gen(
                 .col(curr_col),                 //in
                 .row(curr_row),                 //in
                 .valid(valid),                  //in
-                .rgb(rgb)                       //out
+                .rgb(rgb),                      //out
+                .clk(counter_clk)
         );
 
 
