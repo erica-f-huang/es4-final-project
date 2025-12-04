@@ -7,54 +7,57 @@ module green_lane(
 );
 
 logic [9:0] y = 35;
-logic fall = 1;
 
-// logic [6:0] clk_counter = 0;
-// logic [6:0] count;
-
+logic data_in = 1;
 
 
 always_comb begin
-        // if((y - 35) < row & row <= y) begin
-        //                 lane_rgb = 6'b001100;
+        lane_rgb = 6'd0;  // default
+
+        for (int i = 0; i < 96; i++) begin
+                if (shift_reg[i] && (row >= i*5) && (row < i*5 + 5)) begin
+                        lane_rgb = 6'b001100;
+                end
+        end
+        // for (int i = 0; i < 96; i++) begin
+        //         if (shift_reg[i] == 1) begin     // or != '0 if multi-bit
+        //                 if(((i*5) <= row) & row < (i*5 + 5)) begin
+        //                         lane_rgb = 6'b001100;
+        //                 end else begin
+        //                         lane_rgb = 6'd0;
+        //                 end
         //         end else begin
         //                 lane_rgb = 6'd0;
         //         end
-        if (fall == 1) begin
-                if((y - 35) < row & row <= y) begin
-                        lane_rgb = 6'b001100;
-                end else begin
-                        lane_rgb = 6'd0;
-                end
-        end else begin
-                lane_rgb = 6'b000000;
-        end
+        // end
 end
+
+
+
+logic shift_reg [96]; //96 shift regs
+logic [9:0] pulse_counter = 0;
 
 always_ff @(posedge clk) begin
-        if(y >= 500) begin
-                //generate block at top
-                fall <= 1'b1;
-                y <= 35;
+        //generate block at top 5 pixels
+        //TO GENERATE FULL BOCK INPUT NEEDS TO BE HIGH FOR 7 CLOCK CYCLES
+        if ((pulse_counter%10) == 1) begin   // set 1 for a single-pulse block
+                shift_reg[0] <= 1;
         end else begin
-                y <= y + 5;
+                shift_reg[0] <= 0;
         end
 
-        // if(clk_counter == 8'hFF) begin   //HOX >= 8 or else HOB wont be 1
-        //         clk_counter <= 0;             //reset to 0 if max val
-        //         fall <= 1'b1;
-        //         y <= 35;
-        // end else begin
-        //         clk_counter <= clk_counter + 1;     //increment by 1
-        // end
-
-        // if(count == 7'b1000000) begin //but this counter is not a multiple of the frames so at some point it will get set low in the middle of the screen
-        //         fall <= 1'b1;
-        //         y <= 35;
-        // end
-
+        pulse_counter <= pulse_counter + 1;
 end
 
+// Generate the remaining frames
+genvar i;
+generate
+for (i = 1; i < 96; i++) begin : gen_shift
+        always_ff @(posedge clk) begin
+                shift_reg[i] <= shift_reg[i-1];
+        end
+end
+endgenerate
 
 
 endmodule

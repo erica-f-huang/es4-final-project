@@ -154,44 +154,44 @@ white_lane u_white_lane(
 
 always_comb begin
         if (valid == 1) begin
-                //L&R EDGE BORDER
+                //L&&R EDGE BORDER
                 if ((col == 1) | (col == 639)) begin
                         rgb = white;
 
                 //HIT ZONE
-                end else if ((425 < row & row <= 430) |
-                        (465 < row & row <= 470)) begin
-                                if(210 < col & col <= 555) begin
+                end else if ((425 < row && row <= 430) |
+                        (465 < row && row <= 470)) begin
+                                if(210 < col && col <= 555) begin
                                         rgb = 6'b101010;
                                 end else begin
                                         rgb = black;
                                 end
-                //"SCORE" & SCORE VAL
-                end else if ((20 < col) & (col < 150)) begin
+                //"SCORE" && SCORE VAL
+                end else if ((20 < col) && (col < 150)) begin
                         //"SCORE"
-                        if ((20 < row) & (row < 60)) begin
+                        if ((20 < row) && (row < 60)) begin
                                 rgb = score_title;
 
                         //SCORE VALUE
-                        end else if ((70 < row) & (row < 110)) begin
+                        end else if ((70 < row) && (row < 110)) begin
                                 //10000
-                                if ((20 < col) & (col <= 45)) begin
+                                if ((20 < col) && (col <= 45)) begin
                                         rgb = digit1;
                                 end else 
                                 //01000
-                                if ((46 < col) & (col <= 71))begin
+                                if ((46 < col) && (col <= 71))begin
                                         rgb = digit2;
                                 end else 
                                 //00100
-                                if ((72 < col) & (col <= 97))begin
+                                if ((72 < col) && (col <= 97))begin
                                         rgb = digit3;
                                 end else 
                                 //00010
-                                if ((98 < col) & (col <= 123))begin
+                                if ((98 < col) && (col <= 123))begin
                                         rgb = digit4;
                                 end else 
                                 //00001
-                                if ((124 < col) & (col <= 149))begin
+                                if ((124 < col) && (col <= 149))begin
                                         rgb = digit5;
                                 end else begin
                                         rgb = black;
@@ -201,15 +201,15 @@ always_comb begin
                         end
 
                 //BLOCK LANES
-                end else if ((green_begin < col) & (col < (green_begin + stripe_width))) begin
+                end else if ((green_begin < col) && (col < (green_begin + stripe_width))) begin
                         rgb = green_block;
-                end else if ((yellow_begin < col) & (col < (yellow_begin + stripe_width))) begin
+                end else if ((yellow_begin < col) && (col < (yellow_begin + stripe_width))) begin
                         rgb = yellow_block;
-                end else if ((blue_begin < col) & (col < (blue_begin + stripe_width))) begin
+                end else if ((blue_begin < col) && (col < (blue_begin + stripe_width))) begin
                         rgb = blue_block;
-                end else if ((orange_begin < col) & (col < (orange_begin + stripe_width))) begin
+                end else if ((orange_begin < col) && (col < (orange_begin + stripe_width))) begin
                         rgb = orange_block;
-                end else if ((white_begin < col) & (col < (white_begin + 3*stripe_width))) begin
+                end else if ((white_begin < col) && (col < (white_begin + 3*stripe_width))) begin
                         rgb = white_block;
 
                 //REST OF SCREEN
