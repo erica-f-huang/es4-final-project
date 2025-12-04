@@ -34,7 +34,7 @@ logic[6:0] digit5_offset = 7'd124;
 
 
 //SCORE
-logic[16:0] score_val = 17'd80035;
+logic[16:0] score_val = 17'd80085;
 
 //DIGIT GENERATORS
 digit_gen digit1_gen(
