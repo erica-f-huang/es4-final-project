@@ -3,7 +3,8 @@ module top(
         output HSYNC,                   //go to vga adapter
         output VSYNC,                   //go to vga adapter
         output logic [5:0] rgb,         //go to vga adapter
-	output locked                   // leave floating
+	output locked,                   // leave floating
+        input logic button
 );
 
 
@@ -38,7 +39,8 @@ logic counter_clk;
                 .row(curr_row),                 //in
                 .valid(valid),                  //in
                 .rgb(rgb),                      //out
-                .clk(counter_clk)
+                .clk(counter_clk),
+                .button(button)
         );
 
 

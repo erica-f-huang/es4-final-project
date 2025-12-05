@@ -3,7 +3,8 @@ module green_lane(
         input logic[9:0] row,
         input logic valid,
         input logic clk,
-        output logic[5:0] lane_rgb
+        output logic[5:0] lane_rgb,
+        input logic button
 );
 
 logic [9:0] y = 35;
@@ -35,18 +36,25 @@ end
 
 
 logic shift_reg [96]; //96 shift regs
-logic [9:0] pulse_counter = 0;
+logic [3:0] pulse_counter = 0;
 
 always_ff @(posedge clk) begin
-        //generate block at top 5 pixels
-        //TO GENERATE FULL BOCK INPUT NEEDS TO BE HIGH FOR 7 CLOCK CYCLES
-        if ((pulse_counter%10) == 1) begin   // set 1 for a single-pulse block
+        //click button and it stays high for 7 cycles
+        if ((button == 1'b0) || ((pulse_counter % 8) != 0)) begin   
+                // set 1'b1 for a single-pulse block
                 shift_reg[0] <= 1;
+                pulse_counter <= pulse_counter + 1;
         end else begin
+                pulse_counter <= 0;
                 shift_reg[0] <= 0;
         end
 
-        pulse_counter <= pulse_counter + 1;
+        /*
+        - CHECK THIS EVERY 7 CLOCK CYCLES SO IT PUTS 7 5PIXEL SEGMENTS AT ONCE TO CREATE A BLOCK
+        - but then it will also be low for 7 cycles
+        - nice to haveitis
+        */
+        
 end
 
 // Generate the remaining frames

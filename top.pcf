@@ -16,3 +16,8 @@ set_io rgb[3] 34
 set_io rgb[2] 37
 set_io rgb[1] 31
 set_io rgb[0] 35
+
+
+
+#BUTTION TO DROP BLOCK
+set_io -pullup yes button 2

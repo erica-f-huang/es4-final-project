@@ -3,7 +3,8 @@ module screen_gen(
         input logic[9:0] row,
         input logic valid,
         output logic[5:0] rgb,
-        input logic clk
+        input logic clk,
+        input logic button
 );
 
 //COLORS
@@ -34,7 +35,7 @@ logic[6:0] digit5_offset = 7'd124;
 
 
 //SCORE
-logic[16:0] score_val = 17'd80085;
+logic[16:0] score_val = 17'd30085;
 
 //DIGIT GENERATORS
 digit_gen digit1_gen(
@@ -121,7 +122,8 @@ green_lane u_green_lane(
         .row(row),                      //in
         .valid(valid),                  //in
         .clk(clk),
-        .lane_rgb(green_block)
+        .lane_rgb(green_block),
+        .button(button)
 );
 
 yellow_lane u_yellow_lane(
