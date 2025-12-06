@@ -15,7 +15,7 @@ end
 
 
 always_ff @(posedge in_clk) begin
-        if(count == 20'hFFFFF) begin   //HOX >= 8 or else HOB wont be 1
+        if(count == 20'hF1aFFFF) begin   //HOX >= 8 or else HOB wont be 1
                 count <= 0;             //reset to 0 if max val
         end else begin
                 count <= count + 1;     //increment by 1

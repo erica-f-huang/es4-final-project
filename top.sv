@@ -4,7 +4,6 @@ module top(
         output VSYNC,                   //go to vga adapter
         output logic [5:0] rgb,         //go to vga adapter
 	output locked,                   // leave floating
-        input logic button
 );
 
 
@@ -40,7 +39,6 @@ logic counter_clk;
                 .valid(valid),                  //in
                 .rgb(rgb),                      //out
                 .clk(counter_clk),
-                .button(button)
         );
 
 

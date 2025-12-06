@@ -3,8 +3,7 @@ module screen_gen(
         input logic[9:0] row,
         input logic valid,
         output logic[5:0] rgb,
-        input logic clk,
-        input logic button
+        input logic clk
 );
 
 //COLORS
@@ -117,40 +116,67 @@ logic[5:0] white_block;
 
 //BLOCK GENERATORS
 
-green_lane u_green_lane(
+logic [20:0] green_note = 21'b111111100111111100000;
+logic [20:0] yellow_note = 21'b001111111001111111000;
+logic [20:0] blue_note = 21'b000000011111110000000;
+logic [20:0] orange_note = 21'b111111100000011111110;
+logic [20:0] white_note = 21'b111111101111111000000;
+logic [5:0] which_note = 0;
+
+always_ff @(posedge clk) begin
+        if(which_note == 5'd21) begin
+                which_note = 0;
+        end else begin
+                which_note <= which_note + 1;
+        end
+end
+
+button_lane u_green_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
         .clk(clk),
-        .lane_rgb(green_block),
-        .button(button)
+        .block_color(green),
+        .drop_block(green_note[which_note%21]),
+        .lane_rgb(green_block)
 );
 
-yellow_lane u_yellow_lane(
+button_lane u_yellow_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
+        .clk(clk),
+        .block_color(yellow),
+        .drop_block(yellow_note[which_note%21]),
         .lane_rgb(yellow_block)
 );
 
-blue_lane u_blue_lane(
+button_lane u_blue_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
+        .clk(clk),
+        .block_color(blue),
+        .drop_block(blue_note[which_note%21]),
         .lane_rgb(blue_block)
 );
 
-orange_lane u_orange_lane(
+button_lane u_orange_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
+        .clk(clk),
+        .block_color(orange),
+        .drop_block(orange_note[which_note%21]),
         .lane_rgb(orange_block)
 );
 
-white_lane u_white_lane(
+strum_lane u_white_lane(
         .col(col),                      //in
         .row(row),                      //in
         .valid(valid),                  //in
+        .clk(clk),
+        .drop_block(white_note[which_note%21]),
         .lane_rgb(white_block)
 );
 
